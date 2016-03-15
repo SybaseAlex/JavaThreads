@@ -15,7 +15,7 @@ public class DaemonWhichWaits extends Thread {
     public DaemonWhichWaits(BlockingQueue<String> queue) {       
         super("Daemon demo thread");
         this.queue = queue;
-       // setDaemon(true);
+        //setDaemon(true);
         start();
     }
 
@@ -28,14 +28,10 @@ public class DaemonWhichWaits extends Thread {
                 count = GroupThreadsForDaemon.GROUP.enumerate(threads);
                 
                 for (int i=0; i<count; i++) {
-                    System.out.println(threads[i].getName()+", ");
-//                    if(i == 2) {
-//                       showQueue(); 
-//                    }
+                    System.out.println(threads[i].getName()+", " + i);
                     threads[i].join();
                     showQueue();
-                }
-                
+                }               
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -46,6 +42,5 @@ public class DaemonWhichWaits extends Thread {
         while (!queue.isEmpty()) {
             System.out.println("poll:" + queue.poll());
         }
-        runDaemon = false;
     }
 }

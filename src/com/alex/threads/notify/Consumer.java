@@ -1,8 +1,5 @@
 package com.alex.threads.notify;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
 /**
  *
  * @author Alex

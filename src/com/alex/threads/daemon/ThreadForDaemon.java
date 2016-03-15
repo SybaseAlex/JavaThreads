@@ -3,8 +3,6 @@ package com.alex.threads.daemon;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +19,7 @@ public class ThreadForDaemon implements Runnable {
     public void run() {
         for (int i = 0; i < 10; i++) {
             try {
+                System.out.println(Thread.currentThread().getName() + "put i: " + i);
                 queue.add(Thread.currentThread().getName() + " i: " + i);
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {

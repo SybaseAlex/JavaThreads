@@ -22,7 +22,8 @@ public class GroupThreadsForDaemon implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < size; i++) {
-            new ThreadForDaemon(queue, GROUP, "T" + i);
+            System.out.println("Thread " + i + " started");
+            new ThreadForDaemon(queue, GROUP, "Thread " + i);
         }
     }
 
