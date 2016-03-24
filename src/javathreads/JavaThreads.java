@@ -8,6 +8,8 @@ import com.alex.threads.executorservice.TaskWithResult;
 import com.alex.threads.notify.BlockingQueueSync;
 import com.alex.threads.notify.Consumer;
 import com.alex.threads.notify.Producer;
+import com.alex.threads.sync.ClassWithSyncMethods;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -16,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +40,8 @@ public class JavaThreads {
         // runWithDaemon();
         //runWithDaemonWhichWaits();
         //exampleNotify();
-        executorService();
+        //executorService();
+        callTwoMethodsOfOneClass();
         System.out.println("main thread finished");
     }
 
@@ -141,5 +146,44 @@ public class JavaThreads {
                 exec.shutdown();
             }
         }
+    }
+    
+    /**
+     * run two methods of one class in two different threads
+     */
+    static void callTwoMethodsOfOneClass() {
+        final ClassWithSyncMethods obj = new ClassWithSyncMethods();
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    System.out.println("start of m1: " + LocalDateTime.now());
+                    obj.m1();
+                    System.out.println("end of m1: " + LocalDateTime.now());
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        
+        }).run();
+        
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    System.out.println("start of m2: " + LocalDateTime.now());
+                    obj.m2();
+                    System.out.println("end of m2: " + LocalDateTime.now());
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        
+        }).run();
+    }
+    
+    static void m2(final String param) {
     }
 }
