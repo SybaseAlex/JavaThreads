@@ -190,16 +190,48 @@ public class JavaThreads {
     
     /**
      * main process got the monitor of object ref
-     * and sleep 5 seconds
+     * and sleep 5 seconds.
+     * as main thread got the monitor og object ref and went to sleep
+     * then 3 threads were put into blocked set which works as stack and 
+     * when monitor is free then other threads run by rules of stack.
      */
     static void monitor() throws InterruptedException {
         final Object ref = new Object();
         synchronized(ref) {
             System.out.println("Main owner!");
             new Thread(() -> {
-                System.out.println("Thread started! " + LocalDateTime.now());
+                System.out.println("Thread0 started! " + LocalDateTime.now());
                 synchronized(ref) {
-                    System.out.println("Thread owner of monitor! "  + LocalDateTime.now());
+                    System.out.println("Thread0 owner of monitor! "  + LocalDateTime.now());
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }).start();
+            
+            new Thread(() -> {
+                System.out.println("Thread1 started! " + LocalDateTime.now());
+                synchronized(ref) {
+                    System.out.println("Thread1 owner of monitor! "  + LocalDateTime.now());
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }).start();
+            
+            new Thread(() -> {
+                System.out.println("Thread2 started! " + LocalDateTime.now());
+                synchronized(ref) {
+                    System.out.println("Thread2 owner of monitor! "  + LocalDateTime.now());
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }).start();
             Thread.sleep(5000);
