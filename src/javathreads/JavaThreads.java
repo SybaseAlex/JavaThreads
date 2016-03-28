@@ -32,7 +32,7 @@ public class JavaThreads {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // run1SimpleThread();
         //runAsync3SimpleThreads();
@@ -41,7 +41,8 @@ public class JavaThreads {
         //runWithDaemonWhichWaits();
         //exampleNotify();
         //executorService();
-        callTwoMethodsOfOneClass();
+        //callTwoMethodsOfOneClass();
+        monitor();
         System.out.println("main thread finished");
     }
 
@@ -185,5 +186,23 @@ public class JavaThreads {
     }
     
     static void m2(final String param) {
+    }
+    
+    /**
+     * main process got the monitor of object ref
+     * and sleep 5 seconds
+     */
+    static void monitor() throws InterruptedException {
+        final Object ref = new Object();
+        synchronized(ref) {
+            System.out.println("Main owner!");
+            new Thread(() -> {
+                System.out.println("Thread started! " + LocalDateTime.now());
+                synchronized(ref) {
+                    System.out.println("Thread owner of monitor! "  + LocalDateTime.now());
+                }
+            }).start();
+            Thread.sleep(5000);
+        }   
     }
 }
